@@ -59,3 +59,58 @@ body:has(#homePage:not(.hidden)) { background:#ffffff; }
 /* Thinner HOME date typography */
 .mock-yearmonth,.mock-day,.mock-weekday {font-family:"Noto Serif",serif;font-weight:300;}
 .mock-day {font-size:clamp(33px,7.6vw,52px);letter-spacing:.015em;}
+
+/* メニューアイコンのサイズ */
+.bottom-nav .nav-icon img {
+  display: block;
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+/* アイコンの中央揃え */
+.bottom-nav .nav-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* HOME adjustments: edge arrows and larger, raised illustration */
+.mock-prev { left:-23.5294118%; transform:none; }
+.mock-next { right:-23.5294118%; transform:none; }
+.mock-art-row { top:calc(36.5% - 20px); }
+.mock-image { overflow:visible; }
+.mock-image img { width:150%; height:150%; max-width:none; max-height:none; object-fit:contain; flex-shrink:0; }
+@media (max-width:540px) {
+  /* Previous mobile +70px offset, moved 20px upward */
+  .mock-art-row { top:calc(36.5% + 50px); transform:none; }
+}
+
+
+/* v2: arrows attached to the actual viewport edges on smartphones.
+   The arrows are children of the narrower illustration row, so
+   positioning them relative to that row leaves unwanted side gaps. */
+@media (max-width:540px) {
+  #homePage .mock-prev,
+  #homePage .mock-next {
+    position: fixed;
+    top: 52%;
+    transform: translateY(-50%);
+    z-index: 20;
+  }
+  #homePage .mock-prev {
+    left: 0;
+    right: auto;
+    border-radius: 0 38px 38px 0;
+  }
+  #homePage .mock-next {
+    right: 0;
+    left: auto;
+    border-radius: 38px 0 0 38px;
+  }
+}
+
+/* Keep a little more space between the illustration and diary comment on phones. */
+@media (max-width:540px) {
+  #homePage .mock-note { transform: translateY(20px); }
+}

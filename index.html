@@ -28,4 +28,35 @@
 </section>
 <section id="calendarPage" class="page hidden"><div class="eyebrow">MONTHLY JOURNAL</div><div class="month-nav"><button id="prevMonth" aria-label="前の月">←</button><h1 id="monthTitle"></h1><button id="nextMonth" aria-label="次の月">→</button></div><div class="weekdays"><span>SUN</span><span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span></div><div id="calendar" class="calendar"></div><p class="calendar-hint">日付をタップすると、その日のページが開きます。</p><div class="backup"><h2>MY ARCHIVE</h2><div class="backup-buttons"><button id="exportBtn">バックアップを書き出す</button><button id="importBtn">バックアップを復元</button><input type="file" id="importFile" accept=".json,application/json" hidden></div><p>写真と文章はこの端末内に保存されます。定期的にバックアップしてください。</p></div></section>
 <section id="editorPage" class="page hidden"><button id="backBtn" class="text-button">← 戻る</button><div class="eyebrow editor-eyebrow">NEW JOURNAL PAGE</div><h1 class="editor-heading">a little memory.</h1><form id="diaryForm"><label for="diaryDate">DATE</label><input id="diaryDate" type="date" required><label for="diaryImage">FINISHED ILLUSTRATION / PHOTO</label><div class="ai-guide"><p>写真からイラストを作る（無料・手動連携）</p><input id="sourcePhoto" type="file" accept="image/*"><div class="ai-actions"><button type="button" id="copyPrompt">プロンプトをコピー</button><button type="button" id="openChatGPT">ChatGPTを開く ↗</button></div><p class="ai-help">選んだ元写真はChatGPTへ自動送信されません。ChatGPTで写真を添付して生成し、完成画像を保存してから下の欄で選択してください。</p></div><div class="upload"><input id="diaryImage" type="file" accept="image/*"><img id="imagePreview" alt="選択した画像" hidden><p>画像を選んでください</p></div><label for="diaryText">TODAY'S NOTE</label><textarea id="diaryText" rows="6" maxlength="1000" placeholder="今日の小さな出来事を、ここに。"></textarea><button class="primary" type="submit">この日を保存する</button><button id="deleteBtn" class="delete hidden" type="button">この日記を削除する</button></form></section>
-</main><nav class="bottom-nav" aria-label="メニュー"><button id="homeBtn" class="active"><span class="nav-icon">⌂</span><small>HOME</small></button><button id="calendarBtn"><span class="nav-icon">▦</span><small>CALENDAR</small></button><button id="addBtn"><span class="nav-icon">✎</span><small>WRITE</small></button></nav></div></body></html>
+
+</main>
+
+<nav class="bottom-nav" aria-label="メニュー">
+
+  <button id="homeBtn" class="active">
+    <span class="nav-icon">
+      <img src="./icons/home.svg" alt="">
+    </span>
+    <small>HOME</small>
+  </button>
+
+  <button id="calendarBtn">
+    <span class="nav-icon">
+      <img src="./icons/calendar.svg" alt="">
+    </span>
+    <small>CALENDAR</small>
+  </button>
+
+  <button id="addBtn">
+    <span class="nav-icon">
+      <img src="./icons/write.svg" alt="">
+    </span>
+    <small>WRITE</small>
+  </button>
+
+</nav>
+
+</div>
+</body>
+</html>
+
