@@ -11,7 +11,23 @@ async function refresh(){entries=await all();renderHome();renderCalendar()}
 function show(page){for(const name of ["home","calendar","editor"])$(name+"Page").classList.toggle("hidden",name!==page);for(const [id,name] of [["homeBtn","home"],["calendarBtn","calendar"],["addBtn","editor"]])$(id).classList.toggle("active",name===page);scrollTo(0,0)}
 function getEntry(k){return entries.find(e=>e.date===k)}
 function renderHome(){const k=dateKey(viewDate),entry=getEntry(k);$("homeYearMonth").textContent=`${viewDate.getFullYear()}.${String(viewDate.getMonth()+1).padStart(2,"0")}`;$("homeDay").textContent=String(viewDate.getDate()).padStart(2,"0");$("homeWeekday").textContent=new Intl.DateTimeFormat("en-US",{weekday:"long"}).format(viewDate).toUpperCase();const area=$("homeImage");area.replaceChildren();if(entry?.image){const img=document.createElement("img");img.src=entry.image;img.alt="この日の絵日記";area.append(img)}else{const p=document.createElement("p");p.className="no-art";p.textContent="";area.append(p)}$("homeText").textContent=entry?.text||"まだ日記がありません。";$("editCurrent").textContent=entry?"日記を編集する":"日記を書く"}
-function moveDay(n){viewDate=new Date(viewDate.getFullYear(),viewDate.getMonth(),viewDate.getDate()+n);renderHome()}
+let pageTurning=false;
+function moveDay(n){
+ if(pageTurning||!n)return;
+ const page=document.querySelector(".mock-home");
+ if(!page||window.matchMedia("(prefers-reduced-motion: reduce)").matches){viewDate=new Date(viewDate.getFullYear(),viewDate.getMonth(),viewDate.getDate()+n);renderHome();return}
+ pageTurning=true;
+ const outClass=n>0?"turn-next":"turn-prev";
+ const inClass=n>0?"turn-enter-next":"turn-enter-prev";
+ page.classList.add(outClass);
+ setTimeout(()=>{
+  viewDate=new Date(viewDate.getFullYear(),viewDate.getMonth(),viewDate.getDate()+n);
+  renderHome();
+  page.classList.remove(outClass);
+  page.classList.add(inClass);
+  setTimeout(()=>{page.classList.remove(inClass);pageTurning=false},320);
+ },320);
+}
 function renderCalendar(){const y=monthDate.getFullYear(),m=monthDate.getMonth();$("monthTitle").textContent=new Intl.DateTimeFormat("en-US",{month:"long",year:"numeric"}).format(monthDate);const grid=$("calendar");grid.replaceChildren();const offset=new Date(y,m,1).getDay(),days=new Date(y,m+1,0).getDate();for(let i=0;i<offset;i++){const blank=document.createElement("div");blank.className="calendar-cell";grid.append(blank)}for(let day=1;day<=days;day++){const k=dateKey(new Date(y,m,day)),entry=getEntry(k),b=document.createElement("button");b.type="button";b.className="calendar-cell"+(k===dateKey()?" today":"");b.setAttribute("aria-label",`${k}の日記を開く`);const t=document.createElement("time");t.textContent=day;b.append(t);if(entry?.image){const img=document.createElement("img");img.src=entry.image;img.alt="";img.loading="lazy";b.append(img)}else if(entry){const mark=document.createElement("span");mark.className="mark";mark.textContent="•";b.append(mark)}b.onclick=()=>{viewDate=fromKey(k);renderHome();show("home")};grid.append(b)}}
 function openEditor(k=dateKey()){const entry=getEntry(k);editingOriginalDate=entry?k:null;$("diaryForm").reset();$("diaryDate").value=k;$("diaryText").value=entry?.text||"";selectedImage=entry?.image||null;preview();$("deleteBtn").classList.toggle("hidden",!entry);show("editor")}
 function preview(){const img=$("imagePreview");if(selectedImage){img.src=selectedImage;img.hidden=false}else{img.hidden=true;img.removeAttribute("src")}}

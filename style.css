@@ -114,3 +114,14 @@ body:has(#homePage:not(.hidden)) { background:#ffffff; }
 @media (max-width:540px) {
   #homePage .mock-note { transform: translateY(20px); }
 }
+
+/* Subtle diary page-turn transition; applied only while changing HOME dates. */
+.mock-home.turn-next { animation: diaryTurnNext .32s ease-in forwards; }
+.mock-home.turn-prev { animation: diaryTurnPrev .32s ease-in forwards; }
+.mock-home.turn-enter-next { animation: diaryEnterNext .32s ease-out both; }
+.mock-home.turn-enter-prev { animation: diaryEnterPrev .32s ease-out both; }
+@keyframes diaryTurnNext { from { opacity:1; transform:perspective(1200px) rotateY(0) translateX(0); } to { opacity:0; transform:perspective(1200px) rotateY(-10deg) translateX(-22px); } }
+@keyframes diaryTurnPrev { from { opacity:1; transform:perspective(1200px) rotateY(0) translateX(0); } to { opacity:0; transform:perspective(1200px) rotateY(10deg) translateX(22px); } }
+@keyframes diaryEnterNext { from { opacity:0; transform:perspective(1200px) rotateY(8deg) translateX(16px); } to { opacity:1; transform:perspective(1200px) rotateY(0) translateX(0); } }
+@keyframes diaryEnterPrev { from { opacity:0; transform:perspective(1200px) rotateY(-8deg) translateX(-16px); } to { opacity:1; transform:perspective(1200px) rotateY(0) translateX(0); } }
+@media (prefers-reduced-motion: reduce) { .mock-home.turn-next,.mock-home.turn-prev,.mock-home.turn-enter-next,.mock-home.turn-enter-prev { animation:none; } }
